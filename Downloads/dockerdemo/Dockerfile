@@ -1,5 +1,6 @@
-From tomcat:8.0.51-jre8-alpine
-RUN rm -rf /usr/local/tomcat/webapps/*
-EXPOSE 8080
-COPY spring-boot-web-application-example-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
-CMD ["catalina.sh","run"]
+FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+EXPOSE 80
+ADD spring-boot-web-application-example-0.0.1-SNAPSHOT.war app.war
+ENV JAVA_OPTS=""
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.war" ]
